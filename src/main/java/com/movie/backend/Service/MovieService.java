@@ -2,31 +2,39 @@
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.movie.backend.dto.MovieRequestDTO;
+import com.movie.backend.dto.MovieResponseDto;
 import com.movie.backend.entities.Movie;
 import com.movie.backend.repository.MovieRepository;
 
 @Service
 public class MovieService {
 private final MovieRepository movieRepository;
+private final ModelMapper modelMapper;
 
-public MovieService(MovieRepository movieRepository) {
+public MovieService(MovieRepository movieRepository ,ModelMapper modelMapper) {
 	this.movieRepository = movieRepository;
+	this.modelMapper = modelMapper;
 }
 
-public List<Movie> getallMovies(){
-	return movieRepository.findAll();
+public List<MovieResponseDto> getallMovies(){
+	 List<Movie> movies = movieRepository.findAll();
+	 List<MovieResponseDto> responseDto = movies.stream()
+	            .map(movie -> modelMapper.map(movie, MovieResponseDto.class))
+	            .toList();
+	 return responseDto;
 }
-public Movie addMovie(MovieRequestDTO dto) {
-	Movie movie = new Movie();
-	movie.setName(dto.getName());
-	movie.setLanguage(dto.getLanguage());
-	movie.setGenre(dto.getGenre());
-	movie.setDuration(dto.getDuration());
-	movie.setPrice(dto.getPrice());
+public MovieResponseDto addMovie(MovieRequestDTO dto) {
+	Movie movie = modelMapper.map(dto, Movie.class);
 	
-	return movieRepository.save(movie);
+	Movie savedMovie = movieRepository.save(movie);
+	
+	MovieResponseDto responseDto = modelMapper.map(savedMovie, MovieResponseDto.class);
+	
+	return responseDto;
 }
+ 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.movie.backend.Service.MovieService;
 import com.movie.backend.dto.MovieRequestDTO;
+import com.movie.backend.dto.MovieResponseDto;
 import com.movie.backend.entities.Movie;
 @RestController
 @RequestMapping("/movies")
@@ -19,11 +20,11 @@ public MovieController(MovieService movieService) {
 	this.movieService = movieService;
 }
 @GetMapping
-public List<Movie> getallMovies(){
+public List<MovieResponseDto> getallMovies(){
 	return movieService.getallMovies();
 }
 @PostMapping
-public Movie addMovie(@RequestBody MovieRequestDTO dto) {
+public MovieResponseDto addMovie(@RequestBody MovieRequestDTO dto) {
 	return movieService.addMovie(dto);
 }
 
