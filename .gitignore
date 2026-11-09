@@ -31,3 +31,16 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local configuration and secrets
+/src/main/resources/application.properties
+/src/main/resources/application-local.properties
+.env
+.env.*
+
+# Database backups
+/database/
+
+# Private keys
+*.pem
+*.key
