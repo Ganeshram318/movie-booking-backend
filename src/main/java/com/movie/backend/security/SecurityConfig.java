@@ -7,6 +7,8 @@ import com.movie.backend.security.jwt.AuthFilter;
 
 import java.util.List;
 
+import jakarta.servlet.DispatcherType;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -47,6 +49,10 @@ public class SecurityConfig {
 	        )
 
 	        .authorizeHttpRequests(request -> request
+
+	        	    // Let error dispatches through so the original status (400/404/500) is not replaced by a 401
+	        	    .dispatcherTypeMatchers(DispatcherType.ERROR)
+	        	    .permitAll()
 
 	        	    // Public registration and login
 	        	    .requestMatchers(HttpMethod.POST, "/users", "/auth/login")
