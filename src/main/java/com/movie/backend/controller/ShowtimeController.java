@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.movie.backend.Service.ShowtimeService;
+import com.movie.backend.dto.SeatMapResponseDto;
 import com.movie.backend.dto.ShowtimeRequestDto;
 import com.movie.backend.dto.ShowtimeResponseDto;
 
@@ -52,6 +53,14 @@ public class ShowtimeController {
 
         return ResponseEntity.ok(
                 showtimeService.getShowtimeById(id));
+    }
+
+    // USER / ADMIN - Seat layout with booked seats
+    @GetMapping("/{id}/seats")
+    public ResponseEntity<SeatMapResponseDto>
+            getSeatMap(@PathVariable Integer id) {
+        return ResponseEntity.ok(
+                showtimeService.getSeatMap(id));
     }
 
     // USER / ADMIN - Get Showtimes by Movie

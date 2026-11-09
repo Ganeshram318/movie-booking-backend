@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.movie.backend.Service.TheatreService;
 import com.movie.backend.dto.TheatreRequestDto;
 import com.movie.backend.dto.TheatreResponseDto;
 import com.movie.backend.entities.Theatre;
+import com.movie.backend.repository.ShowtimeRepository;
 import com.movie.backend.repository.TheatreRepository;
 @Service
 public class TheatreServiceImpl implements TheatreService {
@@ -18,6 +21,19 @@ public class TheatreServiceImpl implements TheatreService {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+
+	@Autowired
+	private ShowtimeRepository showtimeRepository;
+
+	@Override
+	public TheatreResponseDto getTheatreById(Integer id) {
+		return modelMapper.map(findTheatre(id), TheatreResponseDto.class);
+	}
+
+	private Theatre findTheatre(Integer id) {
+		return theatreRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Theatre not found"));
+	}
 
 	@Override
 	public TheatreResponseDto addTheatre(TheatreRequestDto dto) {
@@ -51,8 +67,7 @@ public class TheatreServiceImpl implements TheatreService {
 	@Override
 	public TheatreResponseDto updateTheatre(Integer id, TheatreRequestDto dto) {
 
-	    Theatre theatre = theatreRepository.findById(id)
-	            .orElseThrow(() -> new RuntimeException("Theatre not found"));
+	    Theatre theatre = findTheatre(id);
 
 	    theatre.setName(dto.getName());
 	    theatre.setCity(dto.getCity());
@@ -67,8 +82,12 @@ public class TheatreServiceImpl implements TheatreService {
 	@Override
 	public void deleteTheatre(Integer id) {
 
-	    Theatre theatre = theatreRepository.findById(id)
-	            .orElseThrow(() -> new RuntimeException("Theatre not found"));
+	    Theatre theatre = findTheatre(id);
+
+	    if (showtimeRepository.existsByTheatreId(id)) {
+	        throw new ResponseStatusException(HttpStatus.CONFLICT,
+	                "This theatre has showtimes. Delete its showtimes before deleting the theatre.");
+	    }
 
 	    theatreRepository.delete(theatre);
 	}

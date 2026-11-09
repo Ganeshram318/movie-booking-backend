@@ -38,6 +38,11 @@ public class TheatreController {
         return ResponseEntity.ok(theatres);
     }
     
+    @GetMapping("/{id}")
+    public ResponseEntity<TheatreResponseDto> getTheatreById(@PathVariable Integer id) {
+        return ResponseEntity.ok(theatreService.getTheatreById(id));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<TheatreResponseDto> updateTheatre(
             @PathVariable Integer id,

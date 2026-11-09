@@ -1,6 +1,6 @@
-
 package com.movie.backend.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -24,4 +24,10 @@ public class ShowtimeRequestDto {
     private Integer screenNumber;
 
     private Integer totalSeats;
+
+    private String format;
+
+    private String language;
+
+    private BigDecimal ticketPrice;
 }

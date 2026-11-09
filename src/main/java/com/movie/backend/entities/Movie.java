@@ -2,6 +2,7 @@ package com.movie.backend.entities;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,4 +29,8 @@ private String posterUrl;
 private String bannerUrl;
 private double rating;
 private boolean featured;
+private String director;
+@Column(name = "movie_cast", length = 1000)
+private String cast;
+private String certification;
 }

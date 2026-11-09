@@ -12,6 +12,8 @@ TheatreResponseDto addTheatre(TheatreRequestDto dto);
 
 List<TheatreResponseDto> getAllTheatres();
 
+TheatreResponseDto getTheatreById(Integer id);
+
 TheatreResponseDto updateTheatre(Integer id, TheatreRequestDto dto);
 
 void deleteTheatre(Integer id);

@@ -15,5 +15,8 @@ private LocalDate releaseDate;
 private String bannerUrl;
 private double rating;
 private boolean featured;
+private String director;
+private String cast;
+private String certification;
 private String posterUrl;
 }
