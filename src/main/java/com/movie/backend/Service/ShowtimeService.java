@@ -1,8 +1,8 @@
-
 package com.movie.backend.Service;
 
 import java.util.List;
 
+import com.movie.backend.dto.SeatMapResponseDto;
 import com.movie.backend.dto.ShowtimeRequestDto;
 import com.movie.backend.dto.ShowtimeResponseDto;
 
@@ -24,4 +24,6 @@ public interface ShowtimeService {
             ShowtimeRequestDto requestDto);
 
     void deleteShowtime(Integer id);
+
+    SeatMapResponseDto getSeatMap(Integer id);
 }

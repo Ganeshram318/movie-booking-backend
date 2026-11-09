@@ -29,6 +29,10 @@ public MovieController(MovieService movieService) {
 public List<MovieResponseDto> getallMovies(){
 	return movieService.getallMovies();
 }
+@GetMapping("/{id}")
+public MovieResponseDto getMovieById(@PathVariable Integer id) {
+	return movieService.getMovieById(id);
+}
 @PostMapping
 public MovieResponseDto addMovie(@RequestBody MovieRequestDto dto) {
 	return movieService.addMovie(dto);
